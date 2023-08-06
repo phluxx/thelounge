@@ -4,6 +4,8 @@ import { ClientNetwork } from "../js/types";
 
 export type NetworkFormDefaults = Partial<ClientNetwork> & {
   join?: string;
+  brtknUser?: string;
+  brtknToken?: string;
 };
 
 type PartialClientNetwork = Partial<NetworkFormDefaults>;
