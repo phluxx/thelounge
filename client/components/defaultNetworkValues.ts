@@ -1,20 +1,24 @@
 // defaultNetworkValues.ts
 
-import { NetworkFormDefaults } from "../js/types";
+import { ClientNetwork } from "../js/types";
+
+export type NetworkFormDefaults = Partial<ClientNetwork> & {
+  join?: string;
+};
 
 type PartialClientNetwork = Partial<NetworkFormDefaults>;
 
 // Function to provide default values for the `Partial<ClientNetwork>`
-export function getDefaultNetworkValues(bearerToken: string): PartialClientNetwork {
+export function getDefaultNetworkValues(bearerToken: string): NetworkFormDefaults {
   // Split the bearerToken using the colon (:) as the delimiter
   const [brtknUser, brtknToken] = bearerToken.split(':');
 
   return {
-    name: '',
-    host: '',
-    port: undefined,
+    name: 'Ewnix',
+    host: 'irc.ewnix.net',
+    port: 6697,
     password: brtknToken, // Set the password to brtknToken
-    tls: false,
+    tls: true,
     rejectUnauthorized: false,
     proxyEnabled: false,
     proxyHost: '',

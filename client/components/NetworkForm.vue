@@ -442,8 +442,8 @@ import RevealPassword from "./RevealPassword.vue";
 import SidebarToggle from "./SidebarToggle.vue";
 import {defineComponent, nextTick, PropType, ref, watch} from "vue";
 import {useStore} from "../js/store";
-import {ClientNetwork, NetworkFormDefaults} from "../js/types";
-import {getDefaultNetworkValues} from "./defaultNetworkValues";
+import {ClientNetwork} from "../js/types";
+import {getDefaultNetworkValues, NetworkFormDefaults} from "./defaultNetworkValues";
 
 export default defineComponent({
 	name: "NetworkForm",
@@ -457,7 +457,7 @@ export default defineComponent({
 			required: true,
 		},
 		defaults: {
-			type: Object as PropType<Partial<NetworkFormDefaults>>,
+			type: Object as PropType<Partial<ClientNetwork>>,
 			required: true,
 		},
 		disabled: Boolean,
