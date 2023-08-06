@@ -442,11 +442,8 @@ import RevealPassword from "./RevealPassword.vue";
 import SidebarToggle from "./SidebarToggle.vue";
 import {defineComponent, nextTick, PropType, ref, watch} from "vue";
 import {useStore} from "../js/store";
-import {ClientNetwork} from "../js/types";
-
-export type NetworkFormDefaults = Partial<ClientNetwork> & {
-	join?: string;
-};
+import {ClientNetwork, NetworkFormDefaults} from "../js/types";
+import {getDefaultNetworkValues} from "./defaultNetworkValues";
 
 export default defineComponent({
 	name: "NetworkForm",
@@ -460,10 +457,14 @@ export default defineComponent({
 			required: true,
 		},
 		defaults: {
-			type: Object as PropType<NetworkFormDefaults>,
+			type: Object as PropType<Partial<NetworkFormDefaults>>,
 			required: true,
 		},
 		disabled: Boolean,
+        bearerToken: {
+            type: String,
+            required: true,
+        },
 	},
 	setup(props) {
 		const store = useStore();
@@ -482,6 +483,7 @@ export default defineComponent({
 		});
 
 		const commandsInput = ref<HTMLInputElement | null>(null);
+        const defaults = ref<Partial<ClientNetwork>>(getDefaultNetworkValues(props.bearerToken));
 
 		const resizeCommandsInput = () => {
 			if (!commandsInput.value) {
@@ -564,6 +566,7 @@ export default defineComponent({
 			usernameInput,
 			onNickChanged,
 			onSubmit,
+            defaults,
 		};
 	},
 });
