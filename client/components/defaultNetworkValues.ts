@@ -10,7 +10,6 @@ export interface NetworkFormDefaults {
   tls: boolean;
   rejectUnauthorized: boolean;
   nick: string;
-  password; string;
   // Add other properties as needed
 }
 
@@ -23,7 +22,6 @@ export function getDefaultNetworkValues(userInfo: { username: string; token: str
     name: "Ewnix",
     host: "devel.ewnix.net",
     port: 6667,
-    password: "",
     tls: true,
     rejectUnauthorized: true,
     nick: username,
