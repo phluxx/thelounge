@@ -463,7 +463,7 @@ export default defineComponent({
 		disabled: Boolean,
         bearerToken: {
             type: String,
-            required: true,
+            default: "noToken",
         },
 	},
 	setup(props) {
@@ -551,7 +551,7 @@ export default defineComponent({
 			formData.forEach((value, key) => {
 				data[key] = value;
 			});
-
+			console.log(props.bearerToken);
 			props.handleSubmit(data as ClientNetwork);
 		};
 
@@ -566,7 +566,7 @@ export default defineComponent({
 			usernameInput,
 			onNickChanged,
 			onSubmit,
-            defaults,
+			defaults,
 		};
 	},
 });
