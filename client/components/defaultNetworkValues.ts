@@ -13,12 +13,12 @@ export interface NetworkFormDefaults {
   // Add other properties as needed
 }
 
-export function getDefaultNetworkValues(userInfo: { username: string; token: string }): NetworkFormDefaults {
+export function getDefaultNetworkValues(userInfo: { username: string; token: string } | null ): NetworkFormDefaults {
   const defaultUsername = "noCookieFound";
   const defaultToken = "noCookieFound";
 
   if (userInfo && userInfo.username && userInfo.token) {
-    const (username, token) = userInfo;
+    const {username, token} = userInfo;
 
     return {
       username: username,
@@ -26,22 +26,23 @@ export function getDefaultNetworkValues(userInfo: { username: string; token: str
       name: "Ewnix",
       host: "devel.ewnix.net",
       port: 6667,
-      password: "";
+      nick: username,
+      password: "",
       tls: true,
       rejectUnauthorized: true,
     };
   } else {
 
   return {
-    username: username,
-    token: token,
+    username: defaultUsername,
+    token: defaultToken,
     name: "Ewnix",
     host: "devel.ewnix.net",
     port: 6667,
     tls: true,
     rejectUnauthorized: true,
-    nick: username,
-    password: token,
+    nick: defaultUsername,
+    password: defaultToken,
     // Add default values for other properties as needed
   };
 }
