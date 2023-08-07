@@ -438,6 +438,7 @@ the server tab on new connection"
 </style>
 
 <script lang="ts">
+import Cookies from "js-cookie";
 import RevealPassword from "./RevealPassword.vue";
 import SidebarToggle from "./SidebarToggle.vue";
 import {defineComponent, nextTick, PropType, ref, watch} from "vue";
@@ -461,10 +462,6 @@ export default defineComponent({
 			required: true,
 		},
 		disabled: Boolean,
-        bearerToken: {
-            type: String,
-            default: "noToken",
-        },
 	},
 	setup(props) {
 		const store = useStore();
@@ -483,7 +480,7 @@ export default defineComponent({
 		});
 
 		const commandsInput = ref<HTMLInputElement | null>(null);
-        const defaults = ref<Partial<ClientNetwork>>(getDefaultNetworkValues(props.bearerToken));
+        const defaults = ref<Partial<ClientNetwork>>(getDefaultNetworkValues(getUserInfoFromCookie()));
 
 		const resizeCommandsInput = () => {
 			if (!commandsInput.value) {
@@ -551,10 +548,20 @@ export default defineComponent({
 			formData.forEach((value, key) => {
 				data[key] = value;
 			});
-			console.log(props.bearerToken);
+			console.log("Token: ", defaults.value.token);
+			console.log("Username: ", defaults.value.username)
 			props.handleSubmit(data as ClientNetwork);
 		};
-
+		const getUserInfoFromCookie = () => {
+			const userInfoCookie = Cookies.get("ewnix_user_info");
+			if (userInfoCookie) {
+				const [username, token] = userInfoCookie.split(":");
+				return {username, token};
+			} else {
+				return {username: "", token: ""
+			};
+			}
+		};
 		return {
 			store,
 			config,
