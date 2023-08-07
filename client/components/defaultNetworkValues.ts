@@ -14,7 +14,23 @@ export interface NetworkFormDefaults {
 }
 
 export function getDefaultNetworkValues(userInfo: { username: string; token: string }): NetworkFormDefaults {
-  const { username, token } = userInfo;
+  const defaultUsername = "noCookieFound";
+  const defaultToken = "noCookieFound";
+
+  if (userInfo && userInfo.username && userInfo.token) {
+    const (username, token) = userInfo;
+
+    return {
+      username: username,
+      token: token,
+      name: "Ewnix",
+      host: "devel.ewnix.net",
+      port: 6667,
+      password: "";
+      tls: true,
+      rejectUnauthorized: true,
+    };
+  } else {
 
   return {
     username: username,
@@ -28,4 +44,5 @@ export function getDefaultNetworkValues(userInfo: { username: string; token: str
     password: token,
     // Add default values for other properties as needed
   };
+}
 }
